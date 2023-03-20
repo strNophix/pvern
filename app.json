@@ -1,5 +1,9 @@
 {
   "expo": {
+    "scheme": "pvern",
+    "web": {
+      "bundler": "metro"
+    },
     "name": "pvern",
     "slug": "pvern"
   }
