@@ -14,21 +14,20 @@ function buildConsoleUrl(domain: string, node: string, vmid: string) {
 }
 
 export default function QEMUResourceConsolePage() {
-  const { name, vmid } = useSearchParams<{ name: string; vmid: string }>();
+  const { node, vmid } = useSearchParams<{ node: string; vmid: string }>();
   const { domain, ticketData } = useAuthStore();
+  console.log({ ticketData }, buildConsoleUrl(domain, node, vmid));
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <WebView
         source={{
-          uri: buildConsoleUrl(domain, name, vmid),
+          uri: buildConsoleUrl(domain, node, vmid),
           headers: {
             Cookie: `PVEAuthCookie=${ticketData.data.ticket}`,
-            CSRFPreventionToken: ticketData.data.CSRFPreventionToken,
             Accept:
               "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
           },
         }}
-        allowsFullscreenVideo={true}
         scalesPageToFit={false}
         injectedJavaScript={`
             const meta = document.createElement('meta'); 

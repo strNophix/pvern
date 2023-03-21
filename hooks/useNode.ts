@@ -1,7 +1,7 @@
 import { useQueries, useQuery } from "react-query";
 import useAuthStore from "../stores/useAuthStore";
 
-export type ResourceType = "LXC" | "QEMU";
+export type ResourceType = "lxc" | "qemu";
 
 export interface NodeResource {
   status: "stopped" | "running";
@@ -18,7 +18,7 @@ export interface NodeStatus {
   kversion: string;
 }
 
-export interface NodeRDD {
+export interface NodeRddData {
   netin: number;
   netout: number;
   rootused: number;
@@ -30,17 +30,17 @@ export interface NodeRDD {
 
 export function useNode(name: string) {
   const http = useAuthStore((state) => state.http);
-  const [rdd, status, lxc, qemu] = useQueries([
+  const [rddData, status, lxc, qemu] = useQueries([
     {
-      queryKey: ["nodes", name, "rdd"],
+      queryKey: ["nodes", name, "rddData"],
       queryFn: () =>
-        http.get<{ data: NodeRDD[] }>(`/api2/json/nodes/${name}/rrddata`, {
+        http.get<{ data: NodeRddData[] }>(`/api2/json/nodes/${name}/rrddata`, {
           params: {
             timeframe: "hour",
           },
         }),
       enabled: !!name,
-      select: (data): NodeRDD => data.data.data.at(-1),
+      select: (data): NodeRddData => data.data.data.at(-1),
     },
     {
       queryKey: ["nodes", name, "status"],
@@ -66,7 +66,7 @@ export function useNode(name: string) {
   ]);
 
   return {
-    rdd,
+    rddData,
     status,
     lxc,
     qemu,

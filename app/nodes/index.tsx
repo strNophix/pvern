@@ -1,5 +1,5 @@
 import { Link } from "expo-router";
-import { View, Text, SafeAreaView } from "react-native";
+import { View, Text } from "react-native";
 import { ProxmoxNode, useNodes } from "../../hooks/useNodes";
 import Icon from "@expo/vector-icons/Feather";
 import tw from "twrnc";

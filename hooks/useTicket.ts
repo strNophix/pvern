@@ -19,7 +19,7 @@ export async function createTicket({
   username,
   password,
 }: CreateTicketOpts) {
-  const url = `${domain}/api2/json/access/ticket`;
+  const url = new URL("/api2/json/access/ticket", domain).toString();
   const headers = { "Content-Type": "application/json" };
   return axios.post<CreateTicketResp>(url, { username, password }, { headers });
 }

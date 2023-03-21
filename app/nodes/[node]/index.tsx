@@ -1,16 +1,16 @@
 import { Link, useSearchParams } from "expo-router";
-import { View, Text, SafeAreaView, ScrollView, Button } from "react-native";
-import { NodeResource, useNode } from "../../../hooks/useNode";
+import { View, Text, ScrollView } from "react-native";
+import { NodeResource, ResourceType, useNode } from "../../../hooks/useNode";
 import Icon from "@expo/vector-icons/Feather";
 import tw from "twrnc";
-import { formatBytes, formatPercentage } from "../../../lib/helper/format";
-import { useEffect, useMemo } from "react";
+import { formatBytes } from "../../../lib/helper/format";
+import { useMemo } from "react";
 import { Gauge } from "../../../components/Gauge";
 import ProgressBar from "../../../components/ProgressBar";
 import Card from "../../../components/Card";
 
 interface ResourceListItemProps {
-  type: "LXC" | "QEMU";
+  type: ResourceType;
   resource: NodeResource;
 }
 
@@ -23,7 +23,7 @@ export function ResourceListItem({ type, resource }: ResourceListItemProps) {
           resource.status === "running" ? "bg-green-200" : "bg-slate-200"
         )}
       >
-        {type === "LXC" ? (
+        {type === "lxc" ? (
           <Icon name="package" size={22} />
         ) : (
           <Icon name="monitor" size={22} />
@@ -72,24 +72,28 @@ export default function NodePage() {
               </View>
             )}
           </View>
-          {node.rdd.isSuccess && (
+          {node.rddData.isSuccess && (
             <View>
               <View style={tw.style("mb-2")}>
-                <ProgressBar label="CPU" value={node.rdd.data.cpu} max={1} />
+                <ProgressBar
+                  label="CPU"
+                  value={node.rddData.data.cpu}
+                  max={1}
+                />
               </View>
               <View style={tw.style("mb-2")}>
                 <ProgressBar
                   label="Memory"
-                  value={node.rdd.data.memused}
-                  max={node.rdd.data.memtotal}
+                  value={node.rddData.data.memused}
+                  max={node.rddData.data.memtotal}
                   formatFn={formatBytes}
                 />
               </View>
               <View style={tw.style("mb-2")}>
                 <ProgressBar
                   label="Storage"
-                  value={node.rdd.data.rootused}
-                  max={node.rdd.data.roottotal}
+                  value={node.rddData.data.rootused}
+                  max={node.rddData.data.roottotal}
                   formatFn={formatBytes}
                 />
               </View>
@@ -101,13 +105,13 @@ export default function NodePage() {
                 <View style={tw.style("flex-1")}>
                   <Gauge
                     label="Up"
-                    value={`${formatBytes(node.rdd.data.netout)}/s`}
+                    value={`${formatBytes(node.rddData.data.netout)}/s`}
                   />
                 </View>
                 <View style={tw.style("flex-1")}>
                   <Gauge
                     label="Down"
-                    value={`${formatBytes(node.rdd.data.netin)}/s`}
+                    value={`${formatBytes(node.rddData.data.netin)}/s`}
                   />
                 </View>
               </View>
@@ -120,12 +124,12 @@ export default function NodePage() {
           <Link
             key={lxc.vmid}
             href={{
-              pathname: "/nodes/[name]/lxc/[vmid]",
-              params: { name: nodeName, vmid: lxc.vmid },
+              pathname: "/nodes/[node]/lxc/[vmid]",
+              params: { node: nodeName, vmid: lxc.vmid },
             }}
             style={tw.style("m-2")}
           >
-            <ResourceListItem type="LXC" resource={lxc} />
+            <ResourceListItem type="lxc" resource={lxc} />
           </Link>
         ))}
       </Card>
@@ -134,12 +138,12 @@ export default function NodePage() {
           <Link
             key={vm.vmid}
             href={{
-              pathname: "/nodes/[node]/lxc/[vmid]",
+              pathname: "/nodes/[node]/qemu/[vmid]",
               params: { node: nodeName, vmid: vm.vmid },
             }}
             style={tw.style("m-2")}
           >
-            <ResourceListItem type="QEMU" resource={vm} />
+            <ResourceListItem type="qemu" resource={vm} />
           </Link>
         ))}
       </Card>

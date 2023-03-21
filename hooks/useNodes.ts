@@ -21,22 +21,6 @@ export function useNodes() {
     ["nodes"],
     async () => {
       return http.get<GetNodeResp>("/api2/json/nodes");
-      // return {
-      //   data: {
-      //     data: [
-      //       {
-      //         cpu: 0.0166442953020134,
-      //         mem: 21713018880,
-      //         maxmem: 29306216448,
-      //         uptime: 4854322,
-      //         status: "online",
-      //         maxcpu: 12,
-      //         node: "pve",
-      //       },
-      //     ] as ProxmoxNode[],
-      //   },
-      //   isSuccess: true,
-      // };
     },
     { select: (data) => data.data.data, refetchInterval: 6000 }
   );

@@ -1,10 +1,10 @@
 import {
   View,
-  TouchableOpacity,
   Text,
   TextInput,
   SafeAreaView,
   TextInputProps,
+  TouchableHighlight,
 } from "react-native";
 import React, { useState } from "react";
 import tw from "twrnc";
@@ -92,14 +92,14 @@ export default function Login() {
             secureTextEntry
           />
         </View>
-        <TouchableOpacity
+        <TouchableHighlight
           style={tw.style(
             "flex bg-slate-700 rounded-md flex flex-row items-center justify-center"
           )}
           onPress={() => ticketMut.mutate({ domain, username, password })}
         >
           <Text style={tw.style("text-white font-semibold py-3")}>Sign In</Text>
-        </TouchableOpacity>
+        </TouchableHighlight>
       </SafeAreaView>
     </View>
   );
