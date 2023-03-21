@@ -5,6 +5,7 @@ import Icon from "@expo/vector-icons/Feather";
 import tw from "twrnc";
 import { formatPercentage } from "../../lib/helper/format";
 import { ScrollView } from "react-native-gesture-handler";
+import Card from "../../components/Card";
 
 export function NodeListItem({ node }: { node: ProxmoxNode }) {
   return (
@@ -38,43 +39,31 @@ export default function HomePage() {
   const nodes = useNodes();
 
   return (
-    <View>
-      <ScrollView>
-        <SafeAreaView>
-          <Text style={tw.style("ml-6 mt-4")}>Nodes</Text>
-          <View
-            style={tw.style(
-              "bg-white m-2 p-1 rounded-lg border border-slate-200"
-            )}
-          >
-            {nodes.isSuccess &&
-              nodes.data.map((node) => (
-                <Link
-                  key={node.node}
-                  href={{
-                    pathname: "/nodes/[node]",
-                    params: { node: node.node },
-                  }}
-                  disabled={node.status !== "online"}
-                  style={tw.style("p-2")}
-                >
-                  <NodeListItem node={node} />
-                </Link>
-              ))}
-          </View>
+    <ScrollView>
+      <Card label="Nodes">
+        {nodes.isSuccess &&
+          nodes.data.map((node) => (
+            <Link
+              key={node.node}
+              href={{
+                pathname: "/nodes/[node]",
+                params: { node: node.node },
+              }}
+              disabled={node.status !== "online"}
+              style={tw.style("p-2")}
+            >
+              <NodeListItem node={node} />
+            </Link>
+          ))}
+      </Card>
 
-          <Text style={tw.style("ml-6 mt-4")}>Storage</Text>
-          <View
-            style={tw.style(
-              "bg-white m-2 p-1 rounded-lg border border-slate-200"
-            )}
-          >
-            <Text style={tw.style("px-2 py-7 flex flex-row text-center")}>
-              Currently not supported
-            </Text>
-          </View>
-        </SafeAreaView>
-      </ScrollView>
-    </View>
+      <Card label="Storage">
+        <View
+          style={tw.style("flex flex-row justify-center items-center h-16")}
+        >
+          <Text>Currently not supported</Text>
+        </View>
+      </Card>
+    </ScrollView>
   );
 }
