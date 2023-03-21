@@ -41,9 +41,9 @@ export function FormField({
 }
 
 export default function Login() {
-  const [domain, setDomain] = useState("https://pve.holowaif.us:8006");
-  const [username, setUsername] = useState("root@pam");
-  const [password, setPassword] = useState("1Absolut3.lyAd0r3Vtube.rs!");
+  const [domain, setDomain] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const authStore = useAuthStore();
   const ticketMut = useTicketMut({
@@ -77,6 +77,7 @@ export default function Login() {
           <FormField
             autoComplete="username"
             label="Username"
+            placeholder="root@pam"
             value={username}
             onChangeText={setUsername}
           />
@@ -85,6 +86,7 @@ export default function Login() {
           <FormField
             autoComplete="password"
             label="Password"
+            placeholder="Strong and complicated password"
             value={password}
             onChangeText={setPassword}
             secureTextEntry
