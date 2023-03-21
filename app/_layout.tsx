@@ -19,7 +19,6 @@ export default function Layout() {
       {isActive ? (
         <Stack
           screenOptions={{ headerRight: LogoutButton, headerTitle: "PVERN" }}
-          initialRouteName="/test"
         />
       ) : (
         <Auth />
