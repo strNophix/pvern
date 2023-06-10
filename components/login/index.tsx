@@ -58,7 +58,6 @@ export default function Login() {
       authStore.update({ domain, username, ticketData });
     },
     onError: (error: AxiosError) => {
-      console.log(error);
       switch (error.code) {
         case "ERR_BAD_REQUEST":
           setError("Invalid username or password");

@@ -21,8 +21,6 @@ export default function QemuResourcePage() {
     }
   }, [qemu]);
 
-  console.log({ rddData });
-
   return (
     <ScrollView>
       <Card>
