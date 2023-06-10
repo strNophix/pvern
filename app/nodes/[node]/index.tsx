@@ -1,10 +1,10 @@
 import { Link, useSearchParams } from "expo-router";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, TextInput } from "react-native";
 import { NodeResource, ResourceType, useNode } from "../../../hooks/useNode";
 import Icon from "@expo/vector-icons/Feather";
 import tw from "twrnc";
 import { formatBytes } from "../../../lib/helper/format";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Gauge } from "../../../components/shared/gauge";
 import ProgressBar from "../../../components/shared/progress-bar";
 import Card from "../../../components/shared/card";
@@ -48,16 +48,31 @@ export function ResourceListItem({ type, resource }: ResourceListItemProps) {
 export default function NodePage() {
   const { node: nodeName } = useSearchParams<{ node: string }>();
   const node = useNode(nodeName);
+  const [searchFilter, setSearchFilter] = useState("");
 
   const sortedLXCs = useMemo(() => {
     if (!node.lxc.isSuccess) return [];
-    return node.lxc.data.sort((a, b) => a.vmid - b.vmid);
-  }, [node.lxc.data]);
+    const filter = searchFilter.toLocaleLowerCase();
+    return node.lxc.data
+      .filter(
+        (lxc) =>
+          lxc.name.toLowerCase().includes(filter) ||
+          lxc.vmid.toString().includes(filter)
+      )
+      .sort((a, b) => a.vmid - b.vmid);
+  }, [node.lxc.data, searchFilter]);
 
   const sortedVMs = useMemo(() => {
     if (!node.qemu.isSuccess) return [];
-    return node.qemu.data.sort((a, b) => a.vmid - b.vmid);
-  }, [node.qemu.data]);
+    const filter = searchFilter.toLocaleLowerCase();
+    return node.qemu.data
+      .filter(
+        (qemu) =>
+          qemu.name.toLowerCase().includes(filter) ||
+          qemu.vmid.toString().includes(filter)
+      )
+      .sort((a, b) => a.vmid - b.vmid);
+  }, [node.qemu.data, searchFilter]);
 
   return (
     <ScrollView>
@@ -118,6 +133,14 @@ export default function NodePage() {
             </View>
           )}
         </View>
+      </Card>
+      <Card>
+        <TextInput
+          style={tw.style("px-3 py-2")}
+          placeholder="Filter by VMID or name..."
+          value={searchFilter}
+          onChangeText={setSearchFilter}
+        />
       </Card>
       <Card label="LXC Containers">
         {sortedLXCs.map((lxc) => (
