@@ -5,9 +5,9 @@ import Icon from "@expo/vector-icons/Feather";
 import tw from "twrnc";
 import { formatBytes } from "../../../lib/helper/format";
 import { useMemo } from "react";
-import { Gauge } from "../../../components/Gauge";
-import ProgressBar from "../../../components/ProgressBar";
-import Card from "../../../components/Card";
+import { Gauge } from "../../../components/shared/gauge";
+import ProgressBar from "../../../components/shared/progress-bar";
+import Card from "../../../components/shared/card";
 
 interface ResourceListItemProps {
   type: ResourceType;

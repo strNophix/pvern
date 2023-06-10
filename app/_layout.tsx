@@ -1,6 +1,6 @@
 import { Stack } from "expo-router";
 import { QueryClient, QueryClientProvider } from "react-query";
-import Auth from "../components/Login";
+import Auth from "../components/login";
 import useAuthStore from "../stores/useAuthStore";
 import Icon from "@expo/vector-icons/Feather";
 

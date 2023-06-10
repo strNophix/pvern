@@ -1,6 +1,6 @@
 import { View, Text } from "react-native";
 import tw from "twrnc";
-import { formatPercentage } from "../../lib/helper/format";
+import { formatPercentage } from "../../../lib/helper/format";
 
 interface ProgressBarProps {
   label: string;

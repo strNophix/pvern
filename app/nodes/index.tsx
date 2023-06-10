@@ -5,7 +5,7 @@ import Icon from "@expo/vector-icons/Feather";
 import tw from "twrnc";
 import { formatPercentage } from "../../lib/helper/format";
 import { ScrollView } from "react-native-gesture-handler";
-import Card from "../../components/Card";
+import Card from "../../components/shared/card";
 
 export function NodeListItem({ node }: { node: ProxmoxNode }) {
   return (

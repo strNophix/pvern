@@ -41,9 +41,9 @@ export function FormField({
 }
 
 export default function Login() {
-  const [domain, setDomain] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [domain, setDomain] = useState("https://pve.holowaif.us:8006");
+  const [username, setUsername] = useState("root@pam");
+  const [password, setPassword] = useState("7eji5TXjVpme2ZPd6zMUwmrPkg2gQFJc");
 
   const authStore = useAuthStore();
   const ticketMut = useTicketMut({
