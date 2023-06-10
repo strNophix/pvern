@@ -33,7 +33,7 @@ export default function ProgressBar({
       <View style={tw.style("h-3 w-full bg-slate-300 rounded-lg")}>
         <View
           style={tw.style("h-full bg-slate-700 rounded-lg", {
-            width: percentage,
+            width: `${(value / max) * 100}%`,
           })}
         />
       </View>
