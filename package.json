@@ -37,6 +37,7 @@
   "devDependencies": {
     "@babel/core": "^7.19.3",
     "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
+    "react-native-dotenv": "^3.4.8",
     "rome": "^11.0.0"
   },
   "resolutions": {

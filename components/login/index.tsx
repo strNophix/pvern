@@ -10,6 +10,11 @@ import React, { useState } from "react";
 import tw from "twrnc";
 import useAuthStore from "../../stores/useAuthStore";
 import { useTicketMut } from "../../hooks/useTicket";
+import {
+  DEFAUL_PVE_URL,
+  DEFAUL_PVE_USER,
+  DEFAUL_PVE_PASSWORD,
+} from "react-native-dotenv";
 
 interface FormFieldProps extends TextInputProps {
   label: string;
@@ -41,9 +46,9 @@ export function FormField({
 }
 
 export default function Login() {
-  const [domain, setDomain] = useState("https://pve.holowaif.us:8006");
-  const [username, setUsername] = useState("root@pam");
-  const [password, setPassword] = useState("7eji5TXjVpme2ZPd6zMUwmrPkg2gQFJc");
+  const [domain, setDomain] = useState(DEFAUL_PVE_URL ?? "");
+  const [username, setUsername] = useState(DEFAUL_PVE_USER ?? "");
+  const [password, setPassword] = useState(DEFAUL_PVE_PASSWORD ?? "");
 
   const authStore = useAuthStore();
   const ticketMut = useTicketMut({
