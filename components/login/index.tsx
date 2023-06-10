@@ -15,6 +15,7 @@ import {
   DEFAUL_PVE_USER,
   DEFAUL_PVE_PASSWORD,
 } from "react-native-dotenv";
+import { AxiosError } from "axios";
 
 interface FormFieldProps extends TextInputProps {
   label: string;
@@ -49,12 +50,25 @@ export default function Login() {
   const [domain, setDomain] = useState(DEFAUL_PVE_URL ?? "");
   const [username, setUsername] = useState(DEFAUL_PVE_USER ?? "");
   const [password, setPassword] = useState(DEFAUL_PVE_PASSWORD ?? "");
+  const [error, setError] = useState("");
 
   const authStore = useAuthStore();
   const ticketMut = useTicketMut({
     onSuccess: ({ data: ticketData }) => {
-      console.log({ ticketData });
       authStore.update({ domain, username, ticketData });
+    },
+    onError: (error: AxiosError) => {
+      console.log(error);
+      switch (error.code) {
+        case "ERR_BAD_REQUEST":
+          setError("Invalid username or password");
+          return;
+        case "ERR_NETWORK":
+          setError("Failed to connect to server");
+          return;
+        default:
+          setError("Something unexpected happened");
+      }
     },
   });
 
@@ -105,6 +119,7 @@ export default function Login() {
         >
           <Text style={tw.style("text-white font-semibold py-3")}>Sign In</Text>
         </TouchableHighlight>
+        <Text style={tw.style("text-center mt-2 font-semibold")}>{error}</Text>
       </SafeAreaView>
     </View>
   );
