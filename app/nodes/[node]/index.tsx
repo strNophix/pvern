@@ -50,28 +50,30 @@ export default function NodePage() {
   const node = useNode(nodeName);
   const [searchFilter, setSearchFilter] = useState("");
 
+  const filter = searchFilter.toLocaleLowerCase();
+  const filterResources = (resource) => {
+    return (
+      resource.name.toLowerCase().includes(filter) ||
+      resource.vmid.toString().includes(filter)
+    );
+  };
+
   const sortedLXCs = useMemo(() => {
     if (!node.lxc.isSuccess) return [];
-    const filter = searchFilter.toLocaleLowerCase();
-    return node.lxc.data
-      .filter(
-        (lxc) =>
-          lxc.name.toLowerCase().includes(filter) ||
-          lxc.vmid.toString().includes(filter)
-      )
-      .sort((a, b) => a.vmid - b.vmid);
+    let data = node.lxc.data;
+    if (searchFilter.length > 0) {
+      data = data.filter(filterResources);
+    }
+    return data.sort((a, b) => a.vmid - b.vmid);
   }, [node.lxc.data, searchFilter]);
 
   const sortedVMs = useMemo(() => {
     if (!node.qemu.isSuccess) return [];
-    const filter = searchFilter.toLocaleLowerCase();
-    return node.qemu.data
-      .filter(
-        (qemu) =>
-          qemu.name.toLowerCase().includes(filter) ||
-          qemu.vmid.toString().includes(filter)
-      )
-      .sort((a, b) => a.vmid - b.vmid);
+    let data = node.qemu.data;
+    if (searchFilter.length > 0) {
+      data = data.filter(filterResources);
+    }
+    return data.sort((a, b) => a.vmid - b.vmid);
   }, [node.qemu.data, searchFilter]);
 
   return (
