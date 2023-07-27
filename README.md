@@ -1,15 +1,10 @@
-# Expo Router Example
+# pvern
+React Native Client for Proxmox VE. 
 
-Use [`expo-router`](https://expo.github.io/router) to build native navigation using files in the `app/` directory.
+| <img src="assets/login.jpg" alt="login screen" width="200"/> | <img src="assets/node-overview.jpg" alt="node overview" width="200"/> | <img src="assets/container-screen.jpg" alt="container view" width="200"/> |
 
-## 🚀 How to use
-
+## Usage
 ```sh
-npx create-react-native-app -t with-router
+yarn install
+yarn start
 ```
-
-## 📝 Notes
-
-- [Expo Router: Docs](https://expo.github.io/router)
-- [Expo Router: Repo](https://github.com/expo/router)
-- [Request for Comments](https://github.com/expo/router/discussions/1)
